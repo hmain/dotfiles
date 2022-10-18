@@ -1,0 +1,107 @@
+# Guide for changing preferences
+# https://pawelgrzybek.com/change-macos-user-preferences-via-command-line/
+
+# Close any open System Preferences panes, to prevent them from overriding
+# settings we’re about to change
+osascript -e 'Tell application "System Preferences" to quit'
+echo "Let's set up this mac."
+
+# Ask for the administrator password upfront
+sudo -v
+
+# Keep-alive: update existing `sudo` time stamp until `.macos` has finished
+while true; do sudo -n true; sleep 60; kill -0 "$$" || exit; done 2>/dev/null &
+
+# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+
+# System Preferences > General > Highlight color
+# defaults write NSGlobalDomain AppleHighlightColor -string "0.764700 0.976500 0.568600"
+
+# System Preferences > General > Click in the scrollbar to: Jump to the spot that's clicked
+defaults write -globalDomain AppleScrollerPagingBehavior -bool true
+
+# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+
+# System Preferences > Language & Region > Time format
+defaults write NSGlobalDomain AppleICUForce24HourTime -bool true
+
+# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+
+# System Preferences > Trackpad > Scroll & Zoom > Scroll direction: Natural
+defaults write NSGlobalDomain com.apple.swipescrolldirection -bool false
+
+# System Preferences > Trackpad > Point & Click > Tap to click
+defaults write com.apple.driver.AppleBluetoothMultitouch.trackpad Clicking -bool true
+
+# System Preferences > Trackpad > Point & Click > Tracking speed
+# defaults write NSGlobalDomain com.apple.trackpad.scaling -int 3
+
+# System Preferences > Trackpad
+# Disable the Launchpad gesture (pinch with thumb and three fingers)
+defaults write com.apple.dock showLaunchpadGestureEnabled -int 0
+
+# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+
+# Finder > Preferences > Show all filename extensions
+defaults write NSGlobalDomain AppleShowAllExtensions -bool true
+
+# Finder > Preferences
+# Enable snap-to-grid for icons on the desktop and in other icon views
+/usr/libexec/PlistBuddy -c "Set :DesktopViewSettings:IconViewSettings:arrangeBy grid" ~/Library/Preferences/com.apple.finder.plist
+/usr/libexec/PlistBuddy -c "Set :FK_StandardViewSettings:IconViewSettings:arrangeBy grid" ~/Library/Preferences/com.apple.finder.plist
+/usr/libexec/PlistBuddy -c "Set :StandardViewSettings:IconViewSettings:arrangeBy grid" ~/Library/Preferences/com.apple.finder.plist
+
+# Finder > View > As List
+# Use list view in all Finder windows by default
+# Four-letter codes for the other view modes: `icnv`, `clmv`, `Flwv`
+defaults write com.apple.finder FXPreferredViewStyle -string "Nlsv"
+
+# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+
+# System Preferences > Dock > Size
+defaults write com.apple.dock tilesize -int 32
+
+# System Preferences > Dock
+# Disable Dashboard
+defaults write com.apple.dashboard mcx-disabled -bool true
+
+# System Preferences > Dock > Show indicators for open applications
+defaults write com.apple.dock show-process-indicators -bool true
+
+if [[ -f ".dock" && $1 != '--force' ]];
+then
+	echo "Dock already created; use --force to override"
+	exit 1
+fi
+
+dockutil --no-restart --remove all
+dockutil --no-restart --add "/Applications/iTerm.app"
+dockutil --no-restart --add "/Applications/Firefox.app"
+dockutil --no-restart --add "~/Downloads" --section others --sort name --view list
+
+# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+
+# Appearance: Dark
+defaults write NSGlobalDomain AppleInterfaceStyle -string "Dark"
+
+# Accent color: Blue
+defaults write NSGlobalDomain AppleAquaColorVariant -int 1
+
+# Unhide ~/Library
+chflags nohidden ~/Library
+
+# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+
+# Kill affected applications 
+for app in "Dock" \
+	"Finder"; do
+	killall "${app}" &> /dev/null
+done
+
+echo "Done."
+echo "Some of these changes require a logout/restart to take effect."
+
+# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+
+# Remove All Unavailable Simulators
+xcrun simctl delete unavailable
