@@ -8,8 +8,6 @@ For more info see: https://drewdevault.com/2019/12/30/dotfiles.html
 
 ```
 make                    # Bootstrap setup
-make homebrew-packages  # Install tools with homebrew, cask, mas
 make macos              # Set up macOS defaults
-make vim-packages       # Install vim packages with vim-plug
 make zsh-config         # Setup zsh-config
 ```
