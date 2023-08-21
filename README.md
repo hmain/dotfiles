@@ -22,7 +22,7 @@ cd ~
 git init
 git remote add origin git@github.com:hmain/dotfiles
 git fetch
-git checkout -f master
+git checkout -f main
 ```
 
 Based on: https://drewdevault.com/2019/12/30/dotfiles.html
