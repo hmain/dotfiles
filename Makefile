@@ -8,7 +8,7 @@ OS := $(shell uname)
 all: $(OS) zsh-config
 
 Darwin: homebrew-packages zsh-config
-Linux:
+Linux: apt-packages zsh-config
 
 $(BREW):
 	@echo Installing Homebrew
@@ -21,8 +21,14 @@ homebrew-packages: $(BREW)
 macos:
 	@bash -c $$XDG_CONFIG_HOME/macos/config
 
+.PHONY: apt-packages
+apt-packages:
+	@echo Installing packages using apt
+	@bash -c "$(shell [ -n "$$XDG_CONFIG_HOME" ] && echo $$XDG_CONFIG_HOME || echo $$HOME/.config)/linux/config.sh"
+
 .PHONY: zsh-config
-zsh:
+zsh-config:
 	@echo Installing oh-my-zsh
-	@sh -c "$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
+	@bash -c "$(shell [ -n "$$XDG_CONFIG_HOME" ] && echo $$XDG_CONFIG_HOME || echo $$HOME/.config)/zsh/install_oh_my_zsh.sh"
+
 
