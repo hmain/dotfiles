@@ -1,0 +1,22 @@
+#!/bin/bash
+
+# Install common dependencies
+
+sudo apt update && sudo apt install -y \
+    apt-transport-https \
+    ca-certificates \
+    curl \
+    wget \
+    gnupg2 \
+    software-properties-common \
+    man \
+    perl \
+    git \
+    build-essential \
+
+
+
+
+
+
+

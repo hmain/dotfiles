@@ -8,7 +8,7 @@ OS := $(shell uname)
 all: $(OS) zsh-config
 
 Darwin: homebrew-packages zsh-config
-Linux: apt-packages zsh-config
+Linux: apt-packages zsh-config homebrew-packages
 
 $(BREW):
 	@echo Installing Homebrew
@@ -24,11 +24,18 @@ macos:
 .PHONY: apt-packages
 apt-packages:
 	@echo Installing packages using apt
-	@bash -c "$(shell [ -n "$$XDG_CONFIG_HOME" ] && echo $$XDG_CONFIG_HOME || echo $$HOME/.config)/linux/config.sh"
+	@bash -c "$(shell [ -n "$$XDG_CONFIG_HOME" ] && echo $$XDG_CONFIG_HOME || echo $$HOME/.config)/linux/config"
 
-.PHONY: zsh-config
-zsh-config:
-	@echo Installing oh-my-zsh
-	@bash -c "$(shell [ -n "$$XDG_CONFIG_HOME" ] && echo $$XDG_CONFIG_HOME || echo $$HOME/.config)/zsh/install_oh_my_zsh.sh"
+#.PHONY: zsh-config
+#zsh-config:
+#	@echo Installing oh-my-zsh
+#	@bash -c "$(shell [ -n "$$XDG_CONFIG_HOME" ] && echo $$XDG_CONFIG_HOME || echo $$HOME/.config)/zsh/install_oh_my_zsh.sh"
+#
+
+# Check if oh-my-zsh is already installed first then install it
+.PHONY: zsh-config  
+zsh-config:  
+	@[ ! -d "$$HOME/.oh-my-zsh" ] && echo "Installing oh-my-zsh" && bash -c "$(shell [ -n "$$XDG_CONFIG_HOME" ] && echo $$XDG_CONFIG_HOME || echo $$HOME/.config)/zsh/install_oh_my_zsh.sh" || echo "oh-my-zsh is already installed"  
+
 
 

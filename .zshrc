@@ -75,7 +75,7 @@ ZSH_THEME="fishy"
 # Custom plugins may be added to $ZSH_CUSTOM/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(git zsh-autosuggestions zsh-syntax-highlighting fast-syntax-highlighting aws 1password terraform python brew)
+plugins=(git zsh-autosuggestions zsh-syntax-highlighting aws 1password terraform python brew)
 
 source $ZSH/oh-my-zsh.sh
 
@@ -109,8 +109,8 @@ source $ZSH/oh-my-zsh.sh
 if which pyenv-virtualenv-init > /dev/null; then eval "$(pyenv virtualenv-init -)"; fi
 
 # az cli
-autoload -U +X bashcompinit && bashcompinit
-source /opt/homebrew/etc/bash_completion.d/az
+#autoload -U +X bashcompinit && bashcompinit
+#source /opt/homebrew/etc/bash_completion.d/az
 
 # Longer history
 alias history="history 1"
@@ -167,4 +167,5 @@ show_local_history() {
     echo "$results"
 }
 
-
+# kubectl zsh completion
+source <(kubectl completion zsh)
