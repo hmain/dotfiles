@@ -169,3 +169,22 @@ show_local_history() {
 
 # kubectl zsh completion
 source <(kubectl completion zsh)
+
+# Miniconda
+export PATH="$PATH:$HOME/miniconda3/bin"
+
+# >>> conda initialize >>>
+# !! Contents within this block are managed by 'conda init' !!
+__conda_setup="$('/home/hamin/miniconda3/bin/conda' 'shell.zsh' 'hook' 2> /dev/null)"
+if [ $? -eq 0 ]; then
+    eval "$__conda_setup"
+else
+    if [ -f "/home/hamin/miniconda3/etc/profile.d/conda.sh" ]; then
+        . "/home/hamin/miniconda3/etc/profile.d/conda.sh"
+    else
+        export PATH="/home/hamin/miniconda3/bin:$PATH"
+    fi
+fi
+unset __conda_setup
+# <<< conda initialize <<<
+
