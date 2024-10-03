@@ -12,7 +12,7 @@ Linux: apt-packages zsh-config homebrew-packages
 
 $(BREW):
 	@echo Installing Homebrew
-	@sudo curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install.sh | bash
+	@sudo curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh"
 
 .PHONY: homebrew-packages
 homebrew-packages: $(BREW)
