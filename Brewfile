@@ -1,6 +1,4 @@
 tap "homebrew/bundle"
-tap "homebrew/cask"
-tap "homebrew/core"
 tap "lucagrulla/tap"
 tap "osx-cross/avr"
 tap "remind101/formulae"
