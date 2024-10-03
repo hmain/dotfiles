@@ -20,7 +20,7 @@ Setting up a new machine is quite easy. After the installation, I run the follow
 ```
 cd ~
 git init
-git remote add origin git@github.com:hmain/dotfiles
+git remote add origin https://github.com/hmain/dotfiles.git
 git fetch
 git checkout -f main
 ```
