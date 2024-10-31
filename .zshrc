@@ -1,19 +1,14 @@
 # If you come from bash you might have to change your $PATH.
-# export PATH=$HOME/bin:/usr/local/bin:$PATH
+# export PATH=$HOME/bin:$HOME/.local/bin:/usr/local/bin:$PATH
 
-# Path to your oh-my-zsh installation.
+# Path to your Oh My Zsh installation.
 export ZSH="$HOME/.oh-my-zsh"
 
-for file in ~/.{path,aliases,functions}; do
-	[ -r "$file" ] && [ -f "$file" ] && source "$file";
-done;
-
-
 # Set name of the theme to load --- if set to "random", it will
-# load a random theme each time oh-my-zsh is loaded, in which case,
+# load a random theme each time Oh My Zsh is loaded, in which case,
 # to know which specific one was loaded, run: echo $RANDOM_THEME
 # See https://github.com/ohmyzsh/ohmyzsh/wiki/Themes
-ZSH_THEME="fishy"
+ZSH_THEME="robbyrussell"
 
 # Set list of themes to pick from when loading at random
 # Setting this variable when ZSH_THEME=random will cause zsh to load
@@ -75,7 +70,7 @@ ZSH_THEME="fishy"
 # Custom plugins may be added to $ZSH_CUSTOM/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(git zsh-autosuggestions zsh-syntax-highlighting aws 1password terraform python brew)
+plugins=(git)
 
 source $ZSH/oh-my-zsh.sh
 
@@ -90,101 +85,23 @@ source $ZSH/oh-my-zsh.sh
 # if [[ -n $SSH_CONNECTION ]]; then
 #   export EDITOR='vim'
 # else
-#   export EDITOR='mvim'
+#   export EDITOR='nvim'
 # fi
 
 # Compilation flags
-# export ARCHFLAGS="-arch x86_64"
+# export ARCHFLAGS="-arch $(uname -m)"
 
-# Set personal aliases, overriding those provided by oh-my-zsh libs,
-# plugins, and themes. Aliases can be placed here, though oh-my-zsh
-# users are encouraged to define aliases within the ZSH_CUSTOM folder.
+# Set personal aliases, overriding those provided by Oh My Zsh libs,
+# plugins, and themes. Aliases can be placed here, though Oh My Zsh
+# users are encouraged to define aliases within a top-level file in
+# the $ZSH_CUSTOM folder, with .zsh extension. Examples:
+# - $ZSH_CUSTOM/aliases.zsh
+# - $ZSH_CUSTOM/macos.zsh
 # For a full list of active aliases, run `alias`.
 #
 # Example aliases
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 
-# Pyenv auto-enable
-if which pyenv-virtualenv-init > /dev/null; then eval "$(pyenv virtualenv-init -)"; fi
-
-# az cli
-#autoload -U +X bashcompinit && bashcompinit
-#source /opt/homebrew/etc/bash_completion.d/az
-
-# Longer history
-alias history="history 1"
-HISTSIZE=99999  
-HISTFILESIZE=99999 
-SAVEHIST=$HISTSIZE
-
-# https://github.com/larkery/zsh-histdb
-HISTDB_TABULATE_CMD=(sed -e $'s/\x1f/\t/g')
-source $HOME/.oh-my-zsh/custom/plugins/zsh-histdb/sqlite-history.zsh
-autoload -Uz add-zsh-hook
-
-## Hook to zsh-autosuggestions
-## From https://www.dev-diaries.com/blog/terminal-history-auto-suggestions-as-you-type/
-
-# Query to pull in the most recent command if anything was found similar
-# in that directory. Otherwise pull in the most recent command used anywhere
-# Give back the command that was used most recently
-_zsh_autosuggest_strategy_histdb_top_fallback() {
-    local query="
-    select commands.argv from
-    history left join commands on history.command_id = commands.rowid
-    left join places on history.place_id = places.rowid
-    where places.dir LIKE
-        case when exists(select commands.argv from history
-        left join commands on history.command_id = commands.rowid
-        left join places on history.place_id = places.rowid
-        where places.dir LIKE '$(sql_escape $PWD)%'
-        AND commands.argv LIKE '$(sql_escape $1)%')
-            then '$(sql_escape $PWD)%'
-            else '%'
-            end
-    and commands.argv LIKE '$(sql_escape $1)%'
-    group by commands.argv
-    order by places.dir LIKE '$(sql_escape $PWD)%' desc,
-        history.start_time desc
-    limit 1"
-    suggestion=$(_histdb_query "$query")
-}
-
-ZSH_AUTOSUGGEST_STRATEGY=histdb_top_fallback
-
-show_local_history() {
-    limit="${1:-10}"
-    local query="
-        select history.start_time, commands.argv
-        from history left join commands on history.command_id = commands.rowid
-        left join places on history.place_id = places.rowid
-        where places.dir LIKE '$(sql_escape $PWD)%'
-        order by history.start_time desc
-        limit $limit
-    "
-    results=$(_histdb_query "$query")
-    echo "$results"
-}
-
-# kubectl zsh completion
-source <(kubectl completion zsh)
-
-# Miniconda
-export PATH="$PATH:$HOME/miniconda3/bin"
-
-# >>> conda initialize >>>
-# !! Contents within this block are managed by 'conda init' !!
-__conda_setup="$('/home/hamin/miniconda3/bin/conda' 'shell.zsh' 'hook' 2> /dev/null)"
-if [ $? -eq 0 ]; then
-    eval "$__conda_setup"
-else
-    if [ -f "/home/hamin/miniconda3/etc/profile.d/conda.sh" ]; then
-        . "/home/hamin/miniconda3/etc/profile.d/conda.sh"
-    else
-        export PATH="/home/hamin/miniconda3/bin:$PATH"
-    fi
-fi
-unset __conda_setup
-# <<< conda initialize <<<
-
+# Created by `pipx` on 2024-10-03 08:25:18
+export PATH="$PATH:/Users/emhamin/.local/bin"
