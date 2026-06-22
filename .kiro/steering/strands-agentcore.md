@@ -1,3 +1,8 @@
+---
+inclusion: fileMatch
+fileMatchPattern: '**/agent*,**/strands*,**/prompts.py,**/bedrock*'
+---
+
 # Strands / AgentCore Rules
 
 - Always use Strands and AgentCore when creating agents in projects.
