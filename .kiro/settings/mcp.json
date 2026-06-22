@@ -11,7 +11,7 @@
       "timeout": 100000
     },
     "cainban": {
-      "command": "/Users/emhamin/.local/bin/cainban",
+      "command": "cainban",
       "args": [
         "mcp"
       ]
@@ -19,7 +19,7 @@
     "aws-pricing-calculator": {
       "command": "node",
       "args": [
-        "/Users/emhamin/git/sample-aws-pricing-calculator-mcp/mcp-server.js"
+        "${HOME}/git/sample-aws-pricing-calculator-mcp/mcp-server.js"
       ]
     },
     "playwright": {
@@ -29,7 +29,7 @@
       ]
     },
     "headroom": {
-      "command": "/Users/emhamin/.local/bin/headroom",
+      "command": "headroom",
       "args": [
         "mcp",
         "serve"
