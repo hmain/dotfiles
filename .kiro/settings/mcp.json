@@ -8,7 +8,22 @@
         "--metadata",
         "AWS_REGION=eu-north-1"
       ],
-      "timeout": 100000
+      "timeout": 100000,
+      "autoApprove": [
+        "search_documentation",
+        "read_documentation",
+        "recommend",
+        "list_regions",
+        "get_regional_availability",
+        "run_script",
+        "get_tasks",
+        "retrieve_skill",
+        "call_aws",
+        "aws___call_aws",
+        "aws___run_script",
+        "aws___get_presigned_url",
+        "aws___search_documentation"
+      ]
     },
     "cainban": {
       "command": "cainban",
@@ -20,12 +35,20 @@
       "command": "node",
       "args": [
         "${HOME}/git/sample-aws-pricing-calculator-mcp/mcp-server.js"
+      ],
+      "autoApprove": [
+        "search_services",
+        "get_service_fields",
+        "import_estimate"
       ]
     },
     "playwright": {
       "command": "npx",
       "args": [
         "@playwright/mcp@latest"
+      ],
+      "autoApprove": [
+        "*"
       ]
     },
     "headroom": {
@@ -37,8 +60,64 @@
       "env": {},
       "autoApprove": [
         "headroom_compress",
-        "headroom_retrieve"
+        "headroom_retrieve",
+        "headroom_stats"
       ]
+    },
+    "awslabs.aws-serverless-mcp": {
+      "command": "uvx",
+      "args": [
+        "awslabs.aws-serverless-mcp-server@latest"
+      ],
+      "env": {
+        "AWS_PROFILE": "default",
+        "AWS_REGION": "eu-west-1",
+        "FASTMCP_LOG_LEVEL": "ERROR"
+      },
+      "disabled": false
+    },
+    "wafr": {
+      "command": "uvx",
+      "args": [
+        "--from",
+        "/Users/emhamin/git/wafr-mcp",
+        "wafr-mcp"
+      ],
+      "env": {
+        "AWS_REGION": "eu-central-1",
+        "AWS_PROFILE": "elastic-mobile-aws-reseller"
+      },
+      "disabled": false,
+      "autoApprove": [
+        "list_workloads",
+        "get_workload",
+        "list_lenses",
+        "list_lens_reviews",
+        "get_lens_review",
+        "list_answers",
+        "get_answer",
+        "list_lens_review_improvements",
+        "get_lens_review_report"
+      ]
+    }
+  },
+  "powers": {
+    "mcpServers": {
+      "power-aws-sam-awslabs.aws-serverless-mcp-server": {
+        "command": "uvx",
+        "args": [
+          "awslabs.aws-serverless-mcp-server@latest"
+        ],
+        "disabled": false
+      },
+      "power-aws-sam-fetch": {
+        "command": "uvx",
+        "args": [
+          "mcp-server-fetch"
+        ],
+        "env": {},
+        "disabled": false
+      }
     }
   }
 }

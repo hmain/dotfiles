@@ -19,3 +19,4 @@ venv/
 # direnv
 .envrc
 .env
+**/.claude/settings.local.json
