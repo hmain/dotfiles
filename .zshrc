@@ -80,14 +80,6 @@ source $ZSH/oh-my-zsh.sh
 
 # User configuration
 
-# Enable Bedrock integration
-export CLAUDE_CODE_USE_BEDROCK=1
-export AWS_REGION=us-east-1  # or your preferred region
-export ANTHROPIC_MODEL='us.anthropic.claude-sonnet-4-20250514-v1:0'
-# Recommended output token settings for Bedrock
-export CLAUDE_CODE_MAX_OUTPUT_TOKENS=4096
-export MAX_THINKING_TOKENS=1024
-
 # export MANPATH="/usr/local/man:$MANPATH"
 
 # You may need to manually set your language environment
@@ -130,3 +122,13 @@ export PATH="$HOME:$PATH"
 
 # Kiro CLI post block. Keep at the bottom of this file.
 [[ -f "${HOME}/Library/Application Support/kiro-cli/shell/zshrc.post.zsh" ]] && builtin source "${HOME}/Library/Application Support/kiro-cli/shell/zshrc.post.zsh"
+
+# >>> headroom persistent env >>>
+export HEADROOM_PORT="8787"
+export HEADROOM_HOST="127.0.0.1"
+export HEADROOM_MODE="cache"
+export HEADROOM_BACKEND="anthropic"
+export HEADROOM_TELEMETRY="off"
+export ANTHROPIC_BASE_URL="http://127.0.0.1:8787"
+export ENABLE_TOOL_SEARCH="true"
+# <<< headroom persistent env <<<
